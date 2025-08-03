@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 
@@ -29,10 +30,48 @@ void reverseArr(int arr[], int size) {
     }
 }
 
-int main() {
-    int arr[] = {5, 4, 30, 9, 2};
+void printSubarray(int arr[], int size) {  // O(n^3)
+    cout << "Subarrays :" << endl;
+    for(int st=0; st<size; st++) { // Iterate over all possible starting indices of subarrays
+        for(int end=st; end<size; end++) { // For each starting index, iterate over possible ending indices
+            for(int i=st; i<=end; i++) { // Print elements from current start to current end (inclusive)
+                cout << arr[i] << " ";
+            }
+            cout << endl; // Print newline after each subarray
+        }
+    }
+}
 
-    int n = sizeof(arr)/sizeof(int); // get size of array //sizeof(arr) doesn't give arr size
+int maxSubarraySum(int arr[], int size) {
+    //approach 1:like printing subarray calculate sum and compare to get max O(n^3)
+    //approach 2: O(n^2)
+    int maxSum = 0;
+    for(int st=0; st<size; st++) {  // Loop through every possible start index of a subarray.
+        int currSum = 0;
+        for(int end=st; end<size; end++) {  // For each start, loop through every possible end index.
+            currSum += arr[end]; // Keep adding values to currSum from st to end.
+            maxSum = max(currSum, maxSum); // Update maxSum whenever currSum exceeds it.
+        }
+    }
+    
+
+    //approach 3: Kadane's Algo O(n)
+    int currSum = 0; 
+    // int maxSum = 0;
+    for(int i=0; i<size; i++) {
+        if(currSum < 0) currSum = 0;
+        
+        currSum += arr[i];
+        maxSum = max(maxSum, currSum);
+    }
+    
+    return maxSum;
+}
+
+int main() {
+    int arr[] = {-3, 90, -7, 2, 3};
+
+    int n = sizeof(arr)/sizeof(arr[0]); // get size of array //sizeof(arr) doesn't give arr size
     cout << "n = " << n << endl;
 
     // In C++, when you pass an array to a function, the array name (arr) is treated as a pointer to the first element.
@@ -47,8 +86,6 @@ int main() {
     for(int i=0; i<5; i++) {
         cout << arr[i] << " "; 
     }
- 
-    
 
 
 
