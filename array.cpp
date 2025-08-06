@@ -68,8 +68,34 @@ int maxSubarraySum(int arr[], int size) {
     return maxSum;
 }
 
+int buyAndSellStock(int arr[], int size) {
+    //approach 1: bruteforce O(n^2) TLE for large datasets
+    int maxProf = 0;
+    int currProf = 0;
+
+    for(int buy=0; buy<size; buy++) { //buying day
+        for(int sell=buy; sell<size; sell++) { //max profit for that day
+            currProf = arr[sell] - arr[buy];
+
+            maxProf = max(maxProf, currProf);
+        }
+    }
+
+    //approach 2: optimised O(n)
+    int bestBuy = arr[0];
+    for(int i=1; i<size; i++) {
+        if(arr[i] < bestBuy) bestBuy = arr[i]; // update bestbuy if()
+
+        currProf = arr[i] - bestBuy;
+
+        if(currProf > maxProf) maxProf = currProf;
+    }
+
+    return maxProf;
+}
+
 int main() {
-    int arr[] = {-3, 90, -7, 2, 3};
+    int arr[] = {7, 1, 5, 3, 10, 4};
 
     int n = sizeof(arr)/sizeof(arr[0]); // get size of array //sizeof(arr) doesn't give arr size
     cout << "n = " << n << endl;
@@ -86,7 +112,6 @@ int main() {
     for(int i=0; i<5; i++) {
         cout << arr[i] << " "; 
     }
-
 
 
     // **Take Away**
