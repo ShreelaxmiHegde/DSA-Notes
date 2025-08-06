@@ -21,7 +21,6 @@ void passByRefVar(int &a) {
 
 const int a = 10;
 int main() {
-
     // pointers -> store address
 
     int a = 10;
@@ -60,6 +59,14 @@ int main() {
 
     passByRefVar(a);
     cout << "b = " << b << endl;
+
+    int array[] = {1, 2, 3};
+    cout << "array = " << array << endl;
+    cout << "&array =" << &array << endl; //same location
+
+    int* pointer = new int[6]();
+    cout << "pointer = " << pointer << endl; //points to first element location
+    cout << "&pointer =" << &pointer << endl; //points where the pointer is located
 
     return 0;
 }
