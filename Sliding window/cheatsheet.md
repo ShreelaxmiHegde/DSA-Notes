@@ -42,10 +42,13 @@ for (int right = 0; right < n; right++) {
         // process window
     }
 }
+```
 
 ---
 
 ### 2.2 Variable-Size Template
+
+```cpp
 int left = 0;
 for (int right = 0; right < n; right++) {
     // expand: include nums[right]
@@ -57,22 +60,24 @@ for (int right = 0; right < n; right++) {
 
     // process valid window [left..right]
 }
-
+```
 ---
 
 ### 2.3 Longest Window
 
+```cpp
 int ans = 0;
 for (int right = 0; right < n; right++) {
     // expand
     while (/* invalid */) left++;
     ans = max(ans, right - left + 1);
 }
-
+```
 ---
 
 ### 2.4 Shortest Window
 
+```cpp
 int ans = INT_MAX;
 for (int right = 0; right < n; right++) {
     // expand
@@ -81,26 +86,28 @@ for (int right = 0; right < n; right++) {
         left++;
     }
 }
-
+```
 ---
 
 ### 2.5 Counting Windows
 
+```cpp
 long long count = 0;
 for (int right = 0; right < n; right++) {
     // expand
     while (/* invalid */) left++;
     count += (right - left + 1); // all subarrays ending at right are valid
 }
-
+```
 
 Exactly K trick:
-countExactly(K) = countAtMost(K) - countAtMost(K - 1)
+`countExactly(K) = countAtMost(K) - countAtMost(K - 1)`
 
 ---
 
 ### 2.6 Sliding Window + Deque (Max/Min)
 
+```cpp
 deque<int> dq;
 for (int i = 0; i < n; i++) {
     if (!dq.empty() && dq.front() <= i - k) dq.pop_front();
@@ -109,105 +116,89 @@ for (int i = 0; i < n; i++) {
     if (i >= k - 1) {
         // nums[dq.front()] = max in window
     }
-} ```
+}
+```
 
 ---
 
 ### 🔹 3. Extra Tips & Tricks (Beyond Basics)
 
-Use hashmap/set for character frequency or uniqueness.
-Use deque for monotonic max/min problems.
-Use two heaps / multiset for median or order statistics.
-For counting subarrays, always think atMost(K).
-For min window problems, shrink aggressively when valid.
+- Use hashmap/set for character frequency or uniqueness.
+- Use deque for monotonic max/min problems.
+- Use two heaps / multiset for median or order statistics.
+- For counting subarrays, always think atMost(K).
+- For min window problems, shrink aggressively when valid.
 
 ---
 
 ### 🔹 4. When Not to Use Sliding Window
 
-If the problem requires non-contiguous subarrays/subsequences → DP/greedy might be better.
-
-If window condition depends on future elements (not just current window).
-
-If constraints are not local (e.g., requires global sorting).
+- If the problem requires non-contiguous subarrays/subsequences → DP/greedy might be better.
+- If window condition depends on future elements (not just current window).
+- If constraints are not local (e.g., requires global sorting).
 
 ---
 
 ### 🔹 5. Complexity
 
-Time: O(n) typically (each element enters & leaves window once).
-
-Space:
-
-O(1) for sum-based windows
-
-O(k) or O(unique elements) for hashmap/set/deque-based windows
+- **Time** : O(n) typically (each element enters & leaves window once).
+- **Space** :
+   - O(1) for sum-based windows
+   - O(k) or O(unique elements) for hashmap/set/deque-based windows
 
 ---
 
 ### 🔹 6. Quick Reference Problem Types
 
-Fixed-Size
+**1. Fixed-Size**
+   - Max/Min sum of subarray of size k
+   - Average of subarray of size k
 
-Max/Min sum of subarray of size k
+**2.Variable-Size**
+   - Longest substring without repeating chars
+   - Longest substring with at most K distinct chars
+   - Minimum size subarray sum ≥ target
 
-Average of subarray of size k
+**3.Counting**
+   - Count subarrays with sum < K
+   - Count substrings with at most K distinct
+   - Count subarrays with exactly K distinct
 
-Variable-Size
-
-Longest substring without repeating chars
-
-Longest substring with at most K distinct chars
-
-Minimum size subarray sum ≥ target
-
-Counting
-
-Count subarrays with sum < K
-
-Count substrings with at most K distinct
-
-Count subarrays with exactly K distinct
-
-Optimized DS
-
-Sliding Window Maximum (deque)
-
-Sliding Window Minimum
-
-Sliding Window Median (heaps)
+4.Optimized DS
+   - Sliding Window Maximum (deque)
+   - Sliding Window Minimum
+   - Sliding Window Median (heaps)
 
 ---
 
 🔹 7. ASCII Visualization
-Fixed Window (k = 3)
+- **Fixed Window (k = 3)**
+   ```
+   [1 2 3] 4 5
+    L     R
+   
+   slide →
+   1 [2 3 4] 5
+     L     R
+   ```
 
-[1 2 3] 4 5
- L     R
-
-slide →
-1 [2 3 4] 5
-  L     R
-
-Variable Window
-Expand →
-[1 2 3 4 5]
- L       R
-
-Shrink →
-    [3 4 5]
-    L   R
+- **Variable Window**
+  ```
+   Expand →
+   [1 2 3 4 5]
+    L       R
+   
+   Shrink →
+       [3 4 5]
+       L   R
+     ```
 
 ---
 
 ### Summary
 
-Fixed-size → Add/remove, check when size == k.
-
-Variable-size → Expand right, shrink left until valid.
-
-Longest/Shortest → Track window length.
-
-Counting → Add (right - left + 1).
-
-Deque/Heap → Optimize max/min/median queries.
+- Fixed-size → Add/remove, check when size == k.
+- Variable-size → Expand right, shrink left until valid.
+- Longest/Shortest → Track window length.
+- Counting → Add (right - left + 1).
+- Deque/Heap → Optimize max/min/median queries.
