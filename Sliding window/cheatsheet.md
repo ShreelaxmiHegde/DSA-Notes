@@ -202,3 +202,64 @@ for (int i = 0; i < n; i++) {
 - Longest/Shortest → Track window length.
 - Counting → Add (right - left + 1).
 - Deque/Heap → Optimize max/min/median queries.
+
+
+
+---
+---
+
+## 🔹 1. Sliding Window Problems: Code Flow Across Easy → Medium → Hard
+
+### ✅ Easy Level (Direct Expanding Window)
+
+* **Examples**: `Leetcode 3 (Longest Substring Without Repeating Characters)`, `Leetcode 1004 (Max Consecutive Ones III)`
+* **Flow**:
+
+  1. Keep two pointers: `left`, `right`.
+  2. Expand `right` to explore more elements.
+  3. If condition breaks (duplicate / too many flips), move `left`.
+  4. Update result with `right-left+1`.
+* **Key Insight**: Single condition check, usually O(1) updates.
+* **Mental Load**: Track one rule only → “Am I valid? If not, shrink.”
+
+---
+
+### ⚖️ Medium Level (Window + Frequency Map / Constraint Tracking)
+
+* **Examples**: `Leetcode 424 (Character Replacement)`, `Leetcode 159 (At Most Two Distinct Characters)`, `Leetcode 567 (Permutation in String)`
+* **Flow**:
+
+  1. Expand `right`, update frequency map (`unordered_map` or array).
+  2. Check constraint (e.g., max frequency, distinct count, match with target freq).
+  3. Shrink `left` while constraint invalid.
+  4. Maintain an auxiliary variable (`maxFreq`, `distinctCount`) to decide window validity.
+* **Key Insight**: More bookkeeping → not just length but also frequency counts.
+* **Mental Load**: Must design *what condition defines a valid window* (flexible).
+
+---
+
+### 🔥 Hard Level (Window + Multiple Constraints / Optimization / Two Maps)
+
+* **Examples**: `Leetcode 76 (Minimum Window Substring)`, `Leetcode 239 (Sliding Window Maximum)`, `Leetcode 727 (Minimum Window Subsequence)`
+* **Flow**:
+
+  1. Expand `right`, maintain full frequency map.
+  2. Shrink `left` to optimize (e.g., smallest window).
+  3. Must track multiple variables: size, validity, character match counts.
+  4. Sometimes requires *two passes* (expand → shrink → expand again).
+* **Key Insight**:
+
+  * Handling **multiple constraints simultaneously**.
+  * Optimizing for *min length* instead of *max length* (harder logic).
+  * May require *deque*, *priority queue*, or *extra preprocessing*.
+* **Mental Load**: Higher → careful about “what is valid”, “when to update answer”, “when to shrink aggressively.”
+
+---
+
+👉 **Summary for Sliding Window:**
+
+* **Easy** → simple expand/shrink rule.
+* **Medium** → frequency maps, derived constraints.
+* **Hard** → multiple moving parts (two maps, optimization, bidirectional shrinking).
+
+---
